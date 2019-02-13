@@ -221,8 +221,8 @@ export class Paginator {
         delete query.maxApiCalls;
       }
 
-      // maxResults is the user specified a limit.
-      if (callback && (maxResults !== -1 || query.autoPaginate === false)) {
+      // maxResults is the user specified limit.
+      if (maxResults !== -1 || query.autoPaginate === false) {
         autoPaginate = false;
       }
     }
@@ -265,12 +265,21 @@ export class Paginator {
     const callback = parsedArguments.callback!;
     if (parsedArguments.autoPaginate) {
       const results = new Array<{}>();
-      paginator.runAsStream_(parsedArguments, originalMethod)
-          .on('error', callback)
-          .on('data', (data: {}) => results.push(data))
-          .on('end', () => callback(null, results));
+      if (callback) {
+        paginator.runAsStream_(parsedArguments, originalMethod)
+            .on('error', callback)
+            .on('data', (data: {}) => results.push(data))
+            .on('end', () => callback(null, results));
+      } else {
+        return new Promise((resolve, reject) => {
+          paginator.runAsStream_(parsedArguments, originalMethod)
+              .on('error', reject)
+              .on('data', (data: {}) => results.push(data))
+              .on('end', () => resolve([results]));
+        });
+      }
     } else {
-      originalMethod(query, callback);
+      return originalMethod(query, callback);
     }
   }
 
@@ -308,23 +317,29 @@ export class Paginator {
     });
 
     function makeRequest(query?: ParsedArguments|string) {
-      originalMethod(query, onResultSet);
+      if (parsedArguments.callback) {
+        originalMethod(query, onResultSet);
+      } else {
+        originalMethod(query).then(
+            // tslint:disable-next-line:no-any
+            (resp: any[]) => onResultSet(null, ...resp), onResultSet);
+      }
     }
 
     // tslint:disable-next-line:no-any
-    function onResultSet(err: Error, results: any[], nextQuery: any) {
+    function onResultSet(err: Error|null, results?: any[], nextQuery?: any) {
       if (err) {
         stream.destroy(err);
         return;
       }
 
-      if (resultsToSend >= 0 && results.length > resultsToSend) {
-        results = results.splice(0, resultsToSend);
+      if (resultsToSend >= 0 && results!.length > resultsToSend) {
+        results = results!.splice(0, resultsToSend);
       }
 
-      resultsToSend -= results.length;
+      resultsToSend -= results!.length;
 
-      split(results, stream).then(streamEnded => {
+      split(results!, stream).then(streamEnded => {
         if (streamEnded) {
           return;
         }
