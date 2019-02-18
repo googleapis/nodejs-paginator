@@ -265,18 +265,18 @@ export class Paginator {
     const callback = parsedArguments.callback!;
     if (parsedArguments.autoPaginate) {
       const results = new Array<{}>();
-      if (callback) {
+      const promise = new Promise((resolve, reject) => {
         paginator.runAsStream_(parsedArguments, originalMethod)
-            .on('error', callback)
+            .on('error', reject)
             .on('data', (data: {}) => results.push(data))
-            .on('end', () => callback(null, results));
+            .on('end', () => resolve([results]));
+      });
+      if (callback) {
+        promise.then(
+            results => callback(null, ...results as []),
+            (err: Error) => callback(err));
       } else {
-        return new Promise((resolve, reject) => {
-          paginator.runAsStream_(parsedArguments, originalMethod)
-              .on('error', reject)
-              .on('data', (data: {}) => results.push(data))
-              .on('end', () => resolve([results]));
-        });
+        return promise;
       }
     } else {
       return originalMethod(query, callback);
