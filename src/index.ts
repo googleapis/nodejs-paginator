@@ -263,24 +263,21 @@ export class Paginator {
   run_(parsedArguments: ParsedArguments, originalMethod: Function) {
     const query = parsedArguments.query;
     const callback = parsedArguments.callback!;
-    if (parsedArguments.autoPaginate) {
-      const results = new Array<{}>();
-      const promise = new Promise((resolve, reject) => {
-        paginator.runAsStream_(parsedArguments, originalMethod)
-            .on('error', reject)
-            .on('data', (data: {}) => results.push(data))
-            .on('end', () => resolve([results]));
-      });
-      if (callback) {
-        promise.then(
-            results => callback(null, ...results as []),
-            (err: Error) => callback(err));
-      } else {
-        return promise;
-      }
-    } else {
+    if (!parsedArguments.autoPaginate) {
       return originalMethod(query, callback);
     }
+    const results = new Array<{}>();
+    const promise = new Promise((resolve, reject) => {
+      paginator.runAsStream_(parsedArguments, originalMethod)
+          .on('error', reject)
+          .on('data', (data: {}) => results.push(data))
+          .on('end', () => resolve(results));
+    });
+    if (!callback) {
+      return promise.then(results => [results]);
+    }
+    promise.then(
+        results => callback(null, results), (err: Error) => callback(err));
   }
 
   /**
