@@ -180,7 +180,8 @@ export class Paginator {
    * @param {string} methodName - Name of the method to streamify.
    * @return {function} - Wrapped function.
    */
-  streamify<T = {}>(methodName: string) {
+  // tslint:disable-next-line:no-any
+  streamify<T = any>(methodName: string) {
     return function(
         // tslint:disable-next-line:no-any
         this: {[index: string]: Function}, ...args: any[]): ResourceStream<T> {
