@@ -314,13 +314,7 @@ export class Paginator {
     });
 
     function makeRequest(query?: ParsedArguments|string) {
-      if (parsedArguments.callback) {
-        originalMethod(query, onResultSet);
-      } else {
-        originalMethod(query).then(
-            // tslint:disable-next-line:no-any
-            (resp: any[]) => onResultSet(null, ...resp), onResultSet);
-      }
+      originalMethod(query, onResultSet);
     }
 
     // tslint:disable-next-line:no-any

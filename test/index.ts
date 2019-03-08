@@ -532,10 +532,10 @@ describe('paginator', () => {
       before(() => {
         delete PARSED_ARGUMENTS.callback;
       });
-      it('should call original method when stream opens', () => {
-        async function originalMethod(query: {}) {
+      it('should call original method when stream opens', (done) => {
+        function originalMethod(query: {}) {
           assert.strictEqual(query, PARSED_ARGUMENTS.query);
-          return [0];
+          done();
         }
         p.paginator.runAsStream_(PARSED_ARGUMENTS, originalMethod);
       });
@@ -543,8 +543,10 @@ describe('paginator', () => {
       it('should emit an error if one occurs', (done) => {
         const error = new Error('Error.');
 
-        async function originalMethod(query: {}) {
-          throw (error);
+        function originalMethod(query: {}, callback: (err: Error) => void) {
+          setImmediate(() => {
+            callback(error);
+          });
         }
 
         const rs = p.paginator.runAsStream_(PARSED_ARGUMENTS, originalMethod);
@@ -558,8 +560,11 @@ describe('paginator', () => {
         const results = ['a', 'b', 'c'];
         const resultsReceived: Array<{}> = [];
 
-        async function originalMethod(query: {}) {
-          return ([results]);
+        function originalMethod(
+            query: {}, callback: (err: Error|null, results: {}) => void) {
+          setImmediate(() => {
+            callback(null, results);
+          });
         }
 
         const rs = p.paginator.runAsStream_(PARSED_ARGUMENTS, originalMethod);
