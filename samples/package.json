@@ -8,7 +8,7 @@
   "repository": "googleapis/nodejs-paginator",
   "private": true,
   "scripts": {
-    "test": "mocha system-test"
+    "test": "mocha"
   },
   "dependencies": {
     "@google-cloud/paginator": "^0.2.0"
