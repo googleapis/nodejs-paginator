@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-console.warn(`no samples available 👻`);
+// [START paginator_quickstart]
+const {paginator} = require('@google-cloud/paginator');
+console.log(paginator);
+// [END paginator_quickstart]
