@@ -83,10 +83,10 @@ export class ResourceStream<T> extends Transform implements ResourceEvents<T> {
           more = this.push(result);
         }
 
-        const finished = !this._nextQuery || !this._resultsToSend;
-        const madeMaxCalls = ++this._requestsMade > this._maxApiCalls;
+        const isFinished = !this._nextQuery || this._resultsToSend < 1;
+        const madeMaxCalls = ++this._requestsMade >= this._maxApiCalls;
 
-        if (finished || madeMaxCalls) {
+        if (isFinished || madeMaxCalls) {
           this.end();
         }
 
