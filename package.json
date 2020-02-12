@@ -19,8 +19,7 @@
     "samples-test": "cd samples/ && npm link ../ && npm test && cd ../",
     "system-test": "mocha build/system-test",
     "docs-test": "linkinator docs",
-    "predocs-test": "npm run docs",
-    "prelint": "cd samples; npm link ../; npm i"
+    "predocs-test": "npm run docs"
   },
   "keywords": [],
   "files": [
