@@ -31,12 +31,14 @@ describe('ResourceStream', () => {
   let requestSpy: sinon.SinonSpy;
   let stream: ResourceStream<{}>;
 
-  beforeEach(() => { // eslint-disable-line
+  // eslint-disable-next-line no-undef
+  beforeEach(() => {
     requestSpy = sandbox.spy();
     stream = new ResourceStream(config, requestSpy);
   });
 
-  afterEach(() => { // eslint-disable-line
+  // eslint-disable-next-line no-undef
+  afterEach(() => {
     sandbox.restore();
   });
 
