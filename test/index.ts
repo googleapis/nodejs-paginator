@@ -122,7 +122,7 @@ describe('paginator', () => {
     });
 
     it('should maintain `this` context', done => {
-      FakeClass.prototype.methodToExtend = function () {
+      FakeClass.prototype.methodToExtend = function() {
         return this.uuid;
       };
 
