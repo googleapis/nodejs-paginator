@@ -45,7 +45,7 @@ afterEach(() => { // eslint-disable-line
   sandbox.restore();
 });
 
-// tslint:disable-next-line no-any
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 function createFakeStream<T = any>() {
   return new PassThrough({objectMode: true}) as P.ResourceStream<T>;
 }
@@ -123,7 +123,7 @@ describe('paginator', () => {
         return this.uuid;
       };
 
-      // tslint:disable-next-line:no-any
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       const cls = new (FakeClass as any)();
       cls.uuid = uuid.v1();
 
