@@ -13,6 +13,6 @@
 // limitations under the License.
 
 // [START paginator_quickstart]
-const {paginator} = require('@google-cloud/paginator');
+const paginator = require('@google-cloud/paginator');
 console.log(paginator);
 // [END paginator_quickstart]
