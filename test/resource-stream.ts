@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import * as assert from 'assert';
-import {describe, it} from 'mocha';
+import {describe, it, beforeEach, afterEach} from 'mocha';
 import * as sinon from 'sinon';
 import {Transform} from 'stream';
 
@@ -31,13 +31,11 @@ describe('ResourceStream', () => {
   let requestSpy: sinon.SinonSpy;
   let stream: ResourceStream<{}>;
 
-  // eslint-disable-next-line no-undef
   beforeEach(() => {
     requestSpy = sandbox.spy();
     stream = new ResourceStream(config, requestSpy);
   });
 
-  // eslint-disable-next-line no-undef
   afterEach(() => {
     sandbox.restore();
   });
