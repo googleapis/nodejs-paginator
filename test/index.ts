@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import * as assert from 'assert';
-import {describe, it} from 'mocha';
+import {describe, it, beforeEach, afterEach} from 'mocha';
 import * as proxyquire from 'proxyquire';
 import * as sinon from 'sinon';
 import {PassThrough, Transform} from 'stream';
@@ -58,7 +58,6 @@ describe('paginator', () => {
     // do nothing
   }
 
-  /* eslint-disable-next-line no-undef */
   beforeEach(() => {
     FakeClass.prototype.methodToExtend = () => {
       return UUID;
@@ -82,9 +81,6 @@ describe('paginator', () => {
 
     it('should accept an array or string method names', () => {
       const originalMethod = FakeClass.prototype.methodToExtend;
-      FakeClass.prototype.anotherMethodToExtend = () => {
-        // do nothing
-      };
       const anotherMethod = FakeClass.prototype.anotherMethodToExtend;
       const methodsToExtend = ['methodToExtend', 'anotherMethodToExtend'];
       paginator.extend(FakeClass, methodsToExtend);
@@ -150,7 +146,6 @@ describe('paginator', () => {
   });
 
   describe('streamify', () => {
-    /* eslint-disable-next-line no-undef */
     beforeEach(() => {
       FakeClass.prototype.streamMethod = paginator.streamify('methodToExtend');
     });
@@ -169,8 +164,7 @@ describe('paginator', () => {
         return args as ParsedArguments;
       });
       sandbox.stub(paginator, 'runAsStream_').callsFake(createFakeStream);
-      /* eslint-disable-next-line prefer-spread */
-      FakeClass.prototype.streamMethod.apply(FakeClass.prototype, fakeArgs);
+      FakeClass.prototype.streamMethod(...fakeArgs);
     });
 
     it('should run the method as a stream', done => {
