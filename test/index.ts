@@ -22,14 +22,16 @@ import * as P from '../src';
 import {paginator, ParsedArguments} from '../src';
 
 const util = {
-  noop: () => {},
+  noop: () => {
+    // do nothing
+  },
 };
 
 class FakeResourceStream extends Transform {
   calledWith: IArguments;
   constructor() {
     super({objectMode: true});
-    this.calledWith = arguments;
+    this.calledWith = arguments; // eslint-disable-line
   }
 }
 
@@ -39,7 +41,7 @@ const p = proxyquire('../src', {
 
 const sandbox = sinon.createSandbox();
 
-afterEach(() => {
+afterEach(() => { // eslint-disable-line
   sandbox.restore();
 });
 
@@ -50,9 +52,11 @@ function createFakeStream<T = any>() {
 
 describe('paginator', () => {
   const UUID = uuid.v1();
-  function FakeClass() {}
+  function FakeClass() {
+    // do nothing
+  }
 
-  beforeEach(() => {
+  beforeEach(() => { // eslint-disable-line
     FakeClass.prototype.methodToExtend = () => {
       return UUID;
     };
@@ -75,7 +79,9 @@ describe('paginator', () => {
 
     it('should accept an array or string method names', () => {
       const originalMethod = FakeClass.prototype.methodToExtend;
-      FakeClass.prototype.anotherMethodToExtend = () => {};
+      FakeClass.prototype.anotherMethodToExtend = () => {
+        // do nothing
+      };
       const anotherMethod = FakeClass.prototype.anotherMethodToExtend;
       const methodsToExtend = ['methodToExtend', 'anotherMethodToExtend'];
       paginator.extend(FakeClass, methodsToExtend);
@@ -109,11 +115,11 @@ describe('paginator', () => {
       });
 
       paginator.extend(FakeClass, 'methodToExtend');
-      FakeClass.prototype.methodToExtend();
+      FakeClass.prototype.methodToExtend(); // eslint-disable-line
     });
 
     it('should maintain `this` context', done => {
-      FakeClass.prototype.methodToExtend = function() {
+      FakeClass.prototype.methodToExtend = function () { // eslint-disable-line
         return this.uuid;
       };
 
@@ -141,7 +147,7 @@ describe('paginator', () => {
   });
 
   describe('streamify', () => {
-    beforeEach(() => {
+    beforeEach(() => { // eslint-disable-line
       FakeClass.prototype.streamMethod = paginator.streamify('methodToExtend');
     });
 
@@ -159,7 +165,7 @@ describe('paginator', () => {
         return args as ParsedArguments;
       });
       sandbox.stub(paginator, 'runAsStream_').callsFake(createFakeStream);
-      FakeClass.prototype.streamMethod.apply(FakeClass.prototype, fakeArgs);
+      FakeClass.prototype.streamMethod.apply(FakeClass.prototype, fakeArgs); // eslint-disable-line
     });
 
     it('should run the method as a stream', done => {
@@ -179,7 +185,7 @@ describe('paginator', () => {
 
     it('should apply the proper context', done => {
       const parsedArguments = {a: 'b', c: 'd'} as ParsedArguments;
-      FakeClass.prototype.methodToExtend = function() {
+      FakeClass.prototype.methodToExtend = function () { // eslint-disable-line
         return this;
       };
       sandbox.stub(paginator, 'parseArguments_').callsFake(() => {

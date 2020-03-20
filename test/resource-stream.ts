@@ -31,12 +31,12 @@ describe('ResourceStream', () => {
   let requestSpy: sinon.SinonSpy;
   let stream: ResourceStream<{}>;
 
-  beforeEach(() => {
+  beforeEach(() => { // eslint-disable-line
     requestSpy = sandbox.spy();
     stream = new ResourceStream(config, requestSpy);
   });
 
-  afterEach(() => {
+  afterEach(() => { // eslint-disable-line
     sandbox.restore();
   });
 

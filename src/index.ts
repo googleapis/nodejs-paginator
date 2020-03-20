@@ -92,7 +92,7 @@ export class Paginator {
 
       // overwrite the original to auto-paginate
       // tslint:disable-next-line:no-any
-      Class.prototype[methodName] = function(...args: any[]) {
+      Class.prototype[methodName] = function (...args: any[]) {// eslint-disable-line
         const parsedArguments = paginator.parseArguments_(args);
         return paginator.run_(parsedArguments, originalMethod.bind(this));
       };
@@ -113,7 +113,7 @@ export class Paginator {
    */
   // tslint:disable-next-line:no-any
   streamify<T = any>(methodName: string) {
-    return function(
+    return function (// eslint-disable-line
       // tslint:disable-next-line:no-any
       this: {[index: string]: Function},
       // tslint:disable-next-line:no-any
