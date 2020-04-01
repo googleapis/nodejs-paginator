@@ -11,7 +11,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "@google-cloud/paginator": "^3.0.0"
+    "@google-cloud/paginator": "^2.0.3"
   },
   "devDependencies": {
     "mocha": "^7.0.0"
