@@ -290,7 +290,7 @@ describe('ResourceStream', () => {
         assert.strictEqual(err, error);
         done();
       });
-      stream._read()
+      stream._read();
     });
   });
 });

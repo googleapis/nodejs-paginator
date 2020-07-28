@@ -70,37 +70,37 @@ export class ResourceStream<T> extends Transform implements ResourceEvents<T> {
             this.destroy(err);
             return;
           }
-  
+
           this._nextQuery = nextQuery;
-  
+
           if (this._resultsToSend !== Infinity) {
             results = results.splice(0, this._resultsToSend);
             this._resultsToSend -= results.length;
           }
-  
+
           let more = true;
-  
+
           for (const result of results) {
             if (this._ended) {
               break;
             }
             more = this.push(result);
           }
-  
+
           const isFinished = !this._nextQuery || this._resultsToSend < 1;
           const madeMaxCalls = ++this._requestsMade >= this._maxApiCalls;
-  
+
           if (isFinished || madeMaxCalls) {
             this.end();
           }
-  
+
           if (more && !this._ended) {
             setImmediate(() => this._read());
           }
-  
+
           this._reading = false;
         }
-      ); 
+      );
     } catch (e) {
       this.destroy(e);
     }
