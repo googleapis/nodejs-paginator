@@ -52,7 +52,7 @@
     "@microsoft/api-extractor": "^7.8.10"
   },
   "dependencies": {
-    "arrify": "^2.0.0",
+    "arrify": "^3.0.0",
     "extend": "^3.0.2"
   },
   "engines": {
