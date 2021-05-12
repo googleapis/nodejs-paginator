@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/nodejs-paginator.git",
-        "sha": "853698bef50f64cfbd5dbb247bfc94b63ef79f03"
+        "sha": "a275e63c5487ca16037c18ddc9cfa99ebc30a0b2"
       }
     },
     {
