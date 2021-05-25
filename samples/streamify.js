@@ -44,6 +44,7 @@ class ApiCaller {
       nextQuery = {query: query.query + 1};
     }
 
+    // Timeout of 500ms to pretend we're making a network request :)
     setTimeout(callback, 500, null, values, nextQuery);
   }
 }
