@@ -13,6 +13,7 @@
 * [Before you begin](#before-you-begin)
 * [Samples](#samples)
   * [Quickstart](#quickstart)
+  * [Streamify](#streamify)
 
 ## Before you begin
 
@@ -39,6 +40,23 @@ __Usage:__
 
 
 `node samples/quickstart.js`
+
+
+-----
+
+
+
+
+### Streamify
+
+View the [source code](https://github.com/googleapis/nodejs-paginator/blob/master/samples/streamify.js).
+
+[![Open in Cloud Shell][shell_img]](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/googleapis/nodejs-paginator&page=editor&open_in_editor=samples/streamify.js,samples/README.md)
+
+__Usage:__
+
+
+`node samples/streamify.js`
 
 
 
