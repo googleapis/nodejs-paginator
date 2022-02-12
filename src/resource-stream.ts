@@ -48,7 +48,9 @@ export class ResourceStream<T> extends Transform implements ResourceEvents<T> {
     this._resultsToSend = args.maxResults === -1 ? Infinity : args.maxResults!;
   }
   /* eslint-disable  @typescript-eslint/no-explicit-any */
-  end(...args: any[]): ReturnType<Writable['end']> extends Writable ? this : void;
+  end(
+    ...args: any[]
+  ): ReturnType<Writable['end']> extends Writable ? this : void;
   end(...args: any[]) {
     this._ended = true;
     return super.end(...args);
