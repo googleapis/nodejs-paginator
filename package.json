@@ -41,7 +41,7 @@
     "codecov": "^3.0.4",
     "gts": "^3.0.0",
     "linkinator": "^2.0.0",
-    "mocha": "^8.0.0",
+    "mocha": "^10.0.0",
     "proxyquire": "^2.0.1",
     "sinon": "^13.0.0",
     "typescript": "^3.8.3",
