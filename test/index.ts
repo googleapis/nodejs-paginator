@@ -392,10 +392,12 @@ describe('paginator', () => {
             callback(
               err: Error,
               results_: {},
+              query: {},
               fakeRes: {},
               anotherArg: number
             ) {
               assert.deepStrictEqual(results_, results);
+              assert.deepStrictEqual(query, {});
               assert.deepStrictEqual(fakeRes, {msg: 'OK'});
               assert.deepStrictEqual(anotherArg, 10);
               done();
@@ -483,8 +485,9 @@ describe('paginator', () => {
 
           paginator
             .run_(parsedArguments, util.noop)
-            .then(([results_, fakeRes, anotherArg]: unknown[]) => {
+            .then(([results_, query_, fakeRes, anotherArg]: unknown[]) => {
               assert.deepStrictEqual(results_, results);
+              assert.deepStrictEqual(query_, {});
               assert.deepEqual(fakeRes, {msg: 'OK'});
               assert.deepEqual(anotherArg, 10);
             });
