@@ -397,7 +397,7 @@ describe('paginator', () => {
               anotherArg: number
             ) {
               assert.deepStrictEqual(results_, results);
-              assert.deepStrictEqual(query, {});
+              assert.deepStrictEqual(query, undefined);
               assert.deepStrictEqual(fakeRes, {msg: 'OK'});
               assert.deepStrictEqual(anotherArg, 10);
               done();
@@ -469,7 +469,7 @@ describe('paginator', () => {
             );
         });
 
-        it('should resolve with all results and extra args', () => {
+        it('should resolve with all results and extra args', done => {
           const results = [{a: 1}, {b: 2}, {c: 3}];
           const args: any[] = [{msg: 'OK'}, 10];
 
@@ -487,9 +487,10 @@ describe('paginator', () => {
             .run_(parsedArguments, util.noop)
             .then(([results_, query_, fakeRes, anotherArg]: unknown[]) => {
               assert.deepStrictEqual(results_, results);
-              assert.deepStrictEqual(query_, {});
+              assert.deepStrictEqual(query_, undefined);
               assert.deepEqual(fakeRes, {msg: 'OK'});
               assert.deepEqual(anotherArg, 10);
+              done();
             });
         });
       });
