@@ -10,7 +10,7 @@
 
 
 
-A result paging utility used by Google node.js modules
+A result paging utility used by Google Node.js modules
 
 
 A comprehensive list of changes in each version may be found in
