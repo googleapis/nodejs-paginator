@@ -274,7 +274,19 @@ describe('ResourceStream', () => {
     it('should keep reading if not full/ended', () => {
       // sinon adds a timer to `nextTick` by default beginning in v19
       // manually specifying the timers like this replicates the behavior pre v19
-      const clock = sandbox.useFakeTimers({toFake:["setTimeout", "clearTimeout", "setInterval", "clearInterval", "Date", "setImmediate", "clearImmediate", "hrtime", "performance"]});
+      const clock = sandbox.useFakeTimers({
+        toFake: [
+          'setTimeout',
+          'clearTimeout',
+          'setInterval',
+          'clearInterval',
+          'Date',
+          'setImmediate',
+          'clearImmediate',
+          'hrtime',
+          'performance',
+        ],
+      });
 
       stream._read();
       const callback = requestSpy.lastCall.args[1];
