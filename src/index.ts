@@ -124,7 +124,7 @@ export class Paginator {
       const originalMethod = this[methodName + '_'] || this[methodName];
       return paginator.runAsStream_<T>(
         parsedArguments,
-        originalMethod.bind(this)
+        originalMethod.bind(this),
       );
     };
   }
@@ -190,7 +190,7 @@ export class Paginator {
     parsedArguments.streamOptions = extend<{}, ParsedArguments>(
       true,
       {},
-      parsedArguments.query as ParsedArguments
+      parsedArguments.query as ParsedArguments,
     );
     delete parsedArguments.streamOptions.autoPaginate;
     delete parsedArguments.streamOptions.maxResults;
@@ -238,7 +238,7 @@ export class Paginator {
     }
     promise.then(
       results => callback(null, results, query, ...otherArgs),
-      (err: Error) => callback(err)
+      (err: Error) => callback(err),
     );
   }
 
@@ -263,7 +263,7 @@ export class Paginator {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   runAsStream_<T = any>(
     parsedArguments: ParsedArguments,
-    originalMethod: Function
+    originalMethod: Function,
   ): ResourceStream<T> {
     return new ResourceStream<T>(parsedArguments, originalMethod);
   }
