@@ -18,7 +18,6 @@
  * @module common/paginator
  */
 
-// import arrify = require('arrify');
 import * as extend from 'extend';
 import {TransformOptions} from 'stream';
 import {ResourceStream} from './resource-stream';
@@ -83,8 +82,6 @@ export class Paginator {
    */
   // tslint:disable-next-line:variable-name
   extend(Class: Function, methodNames: string | string[]) {
-    // methodNames = arrify(methodNames);
-    console.log(typeof methodNames, methodNames)
     if(typeof methodNames === 'string') {
       methodNames = [methodNames];
     }
