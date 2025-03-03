@@ -82,7 +82,7 @@ export class Paginator {
    */
   // tslint:disable-next-line:variable-name
   extend(Class: Function, methodNames: string | string[]) {
-    if(typeof methodNames === 'string') {
+    if (typeof methodNames === 'string') {
       methodNames = [methodNames];
     }
     methodNames.forEach(methodName => {
