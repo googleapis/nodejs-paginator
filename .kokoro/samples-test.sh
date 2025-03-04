@@ -16,6 +16,10 @@
 
 set -eo pipefail
 
+# Ensure the npm global directory is writable, otherwise rebuild `npm`
+mkdir -p $NPM_CONFIG_PREFIX
+npm config -g ls || npm i -g npm@`npm --version`
+
 export NPM_CONFIG_PREFIX=${HOME}/.npm-global
 
 # Setup service account credentials.
